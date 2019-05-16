@@ -1,0 +1,12 @@
+----------Ajouter le proxy http pour apt
+
+sudo nano /etc/apt/apt.conf.d/proxy
+ajoutez : Acquire::http::proxy "http://10.1.2.5:8080/";
+
+----------Ajouter le serveur apt-cache local
+
+cd /etc/apt/apt.conf.d
+sudo gedit 70debconf
+ajoutez : Acquire:http::proxy "http://10.1.0.10:9999/";
+
+
