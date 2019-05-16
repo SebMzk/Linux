@@ -1,1 +1,8 @@
+//-----------Afficher l'Ip de la machine
 
+
+ifconfig enp0s3 | grep "inet ad" | cut -f2 -d: | awk '{print $1}'
+
+//-----------ou
+
+hostname -I
