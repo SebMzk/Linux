@@ -1,0 +1,9 @@
+Sudo nano /etc/network/interfaces
+
+//----------Ceci est un exemple
+
+auto enp0s3 
+iface enp0s3 inet static 
+        address 192.168.10.2 
+        netmask 255.255.255.0 
+        gateway 192.168.10.1
