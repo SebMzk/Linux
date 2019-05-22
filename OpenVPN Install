@@ -55,7 +55,7 @@ source vars
 ./pkitool --server server
 # Génération de la clé du serveur dans keys/ta.key
 sudo openvpn --genkey --secret keys/ta.key
-#Les fichiers keys/ca.crt, keys/ta.key, keys/server.crt, keys/server.key et keys/dh1024.pem sont nécessaire pour l’identification au serveur, on les copie dans /etc/openvpn/ :
+#Les fichiers keys/ca.crt keys/ta.key keys/server.crt keys/server.key et keys/dh1024.pem sont nécessaire pour l’identification au serveur, on les copie dans /etc/openvpn/ :
 
 sudo cp keys/ca.crt keys/ta.key keys/server.crt keys/server.key keys/dh2048.pem /etc/openvpn/
 
