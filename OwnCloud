@@ -1,1 +1,133 @@
+# Bonjour et bienvenue dans ce tuto pour installer OWNCLOUD ! :) 
+# J'ai effectué l'instalation sur une machine virtuelle :
+# Version iso : ubuntu 18.04.2
+# Mémoire vive : 2048 Mo
+# Stockage : 16 Gio
 
+# Mise a jour CMD
+
+$sudo apt-get update
+$sudo apt-get upgrade
+
+# ETAPE 1 : Installez Apache
+
+$ sudo apt install apache2
+
+# Ensuite désactivez la liste des répertoires sur votre apache
+
+$ a2dismod autoindex
+
+# Activez les modules Apache suivants pour que OwnCloud fonctionne correctement
+
+$ sudo a2enmod rewrite
+$ sudo a2enmod headers
+$ sudo a2enmod env
+$ sudo a2enmod dir
+$ sudo a2enmod mime
+
+# Redémarrez Apache pour que les modifications soient apportées
+
+$ sudo systemctl restart apache2
+
+# ETAPE 2 : Installez MariaDB Server
+
+$ sudo apt-get install mariadb-server mariadb-client
+
+# Par défaut, l'installation de MariaDB n'est pas sécurisée; nous devons exécuter la commande ci-dessous pour le rendre sûr
+
+$ sudo mysql_secure_installation
+
+# Cela nous permettra de :
+# -Définir un mot de passe fort pour l'utilisateur root de notre MariaDB
+# -Supprimer les utilisateurs anonymes
+# -Interdire la connexion root
+# -Supprimer les bases de test
+
+# Puis connectez-vous à votre serveur MariaDB en utilisant la commande ci-dessous pour créer une base de données:
+
+$ sudo mysql -u root -p
+
+# Entrez votre mot de passe lorsque vous y êtes invité
+
+# Créez un utilisateur de base de données OwnCloud et un mot de passe en tapant les commandes ci-dessous. Remplacez 'PASSWORD' par un mot de passe assez sur (long, MAJ, MIN, chiffre...)
+
+>CREATE DATABASE owncloud;
+>CREATE USER 'oc_user@'localhost' IDENTIFIED BY 'PASSWORD';
+>GRANT ALL ON owncloud.* TO 'oc_user'@'localhost' IDENTIFIED BY 'PASSWORD' WITH GRANT OPTION;
+>FLUSH PRIVILEGES;
+>EXIT;
+
+# ETAPE 3 : Installez PHP
+
+# OwnCloud supporte PHP 7.1, nous devons donc l'installer à l'aide des comandes ci-dessous:
+
+$ sudo apt-get install software-properties-common
+$ sudo add-apt-repository ppa: ondrej/php
+$ sudo apt update
+$ sudo apt install php7.1
+
+# Ensuite, nous devons installer tous les modules PHP associés en utilisant la commande ci-dessous:
+
+$ sudo apt-get install php7.1-cli php7.1-common php7.1-mbstring php7.1-gd php7.1-intl php7.1-xml php7.1-mysql php7.1-zip php7.1-curl php7.1-xmlrpc
+
+# Les paramètres PHP par défaut peuvent limiter le fonctionnement de OwnCloud, nous devons donc ajuster certaines valeurs par défaut.
+# Ouvrez le fichier 'php.ini' par défaut en tapant la commande ci-dessous :
+
+ sudo nano /etc/php//apache2/php.ini
+ 
+ # Trouvez les paramètres ci-dessous et modifiez leurs valeurs pour qu'elles correspondent à celles du bas :
+ 
+ # file_uploads = on
+ # allow_url_fopen = on
+ # memory_limit = 256M
+ # upload_max_file_size = 100M
+ 
+ # Appuyez ensuite sur CTRL + X, Y et ENTREE pour enregistrer les modifications.
+ 
+ # Redémarrez Apache :
+ 
+ $ sudo systemctl restart apache2
+ 
+# ETAPE 4 : Téléchargez la dernière version de OwnCloud
+ 
+# Placez vous dans le répertoire 'tmp'
+
+$ cd /tmp
+
+# Téléchargez la dernière version de OwnCloud
+
+$ wget https://download.owncloud.org/community/owncloud-10.0.3.zip
+
+# Décompressez le fichier 'owncloud-10.0.3.zip' dans le répertoire actuel
+
+$ unzip owncloud-10.0.3.zip
+
+# Déplacez les fichiers dans un répertoire owncloud sous le dossier racine de votre site web
+
+$ sudo mv owncloud /var/www/html/owncloud/
+
+# ETAPE 5 : Définissez les autorisations de répertoire et de fichier
+
+$ sudo chown -R www-data:www-data /var/www/html/owncloud/
+$ sudo chmod -R 755 /var/www/html/owncloud/
+
+# ETAPE 6 : Finaliser l'installation
+
+# Ouvrez une page internet et entrez l'url ci-dessous avec votre ip,si votre ip est par exemple 10.1.2.3, cela donnera :
+
+# http://10.1.2.3/owncloud
+
+# Configurez ensuite la base de données en entrant le nom de la base de données,
+# le nom d'utilisateur et le mot de passe que vous avez créés ci-dessus
+# Enfin, cliquez sur « Terminer la configuration» en bas de l'écran.
+
+# Votre instance Owncloud est maintenant configurée et vous pouvez vous 
+# connecter au panneau d'administration et commencer à télécharger des fichiers.
+
+
+
+# C'est tout pour l'installation du service auto-hébergé OwnCloud. 
+# N'oubliez pas que vous pouvez créer différents répertoires / dossiers pour mieux organiser vos fichiers.
+# Owncloud vous permet de partager des fichiers avec votre équipe, surtout si vous travaillez sur un projet.
+# J'espère que vous avez apprécié la lecture du guide. :) Bonne journée / soirée !
+ 
