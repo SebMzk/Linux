@@ -73,7 +73,7 @@ $ sudo apt-get install php7.1-cli php7.1-common php7.1-mbstring php7.1-gd php7.1
 # Les paramètres PHP par défaut peuvent limiter le fonctionnement de OwnCloud, nous devons donc ajuster certaines valeurs par défaut.
 # Ouvrez le fichier 'php.ini' par défaut en tapant la commande ci-dessous :
 
- sudo nano /etc/php//apache2/php.ini
+ sudo nano /etc/php/7.1/apache2/php.ini
  
  # Trouvez les paramètres ci-dessous et modifiez leurs valeurs pour qu'elles correspondent à celles du bas :
  
